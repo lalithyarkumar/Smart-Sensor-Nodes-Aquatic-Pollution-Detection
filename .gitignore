@@ -5,3 +5,14 @@ secrets.h
 *.tmp
 *.bak
 .DS_Store
+
+# Private Flask credentials
+private_config.py
+
+# Local database
+database/
+instance/
+
+# Python cache
+__pycache__/
+*.pyc
