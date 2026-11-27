@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-chart-bar"></i> Prediction Result</h2>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h5>Water Quality Parameters</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>pH Level</th>
+                            <td>{{ ph }}</td>
+                        </tr>
+                        <tr>
+                            <th>Temperature</th>
+                            <td>{{ temp }} °C</td>
+                        </tr>
+                        <tr>
+                            <th>Turbidity</th>
+                            <td>{{ tur }} NTU</td>
+                        </tr>
+                        <tr>
+                            <th>TDS</th>
+                            <td>{{ tds }} ppm</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header 
+                    {% if result.lower() in ['good', 'excellent'] %}bg-success
+                    {% elif result.lower() in ['poor', 'unsafe'] %}bg-danger
+                    {% else %}bg-warning{% endif %} text-white">
+                    <h5>Prediction Result</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="display-4 mb-3">
+                        {% if result.lower() in ['good', 'excellent'] %}
+                            <i class="fas fa-check-circle text-success"></i>
+                        {% elif result.lower() in ['poor', 'unsafe'] %}
+                            <i class="fas fa-exclamation-circle text-danger"></i>
+                        {% else %}
+                            <i class="fas fa-exclamation-triangle text-warning"></i>
+                        {% endif %}
+                    </div>
+                    <h3 class="
+                        {% if result.lower() in ['good', 'excellent'] %}text-success
+                        {% elif result.lower() in ['poor', 'unsafe'] %}text-danger
+                        {% else %}text-warning{% endif %}">
+                        {{ result }}
+                    </h3>
+                    
+                    <div class="mt-4">
+                        <div class="progress" style="height: 30px;">
+                            <div class="progress-bar 
+                                {% if result.lower() in ['good', 'excellent'] %}bg-success
+                                {% elif result.lower() in ['poor', 'unsafe'] %}bg-danger
+                                {% else %}bg-warning{% endif %}" 
+                                style="width: 100%">
+                                Quality Score: {{ 100 if result.lower() in ['good', 'excellent'] else 60 if result.lower() in ['moderate', 'fair'] else 30 }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mt-3">
+                <div class="card-header bg-secondary text-white">
+                    <h5>Recommendations</h5>
+                </div>
+                <div class="card-body">
+                    {% if result.lower() in ['good', 'excellent'] %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-thumbs-up"></i> Water quality is excellent. Continue monitoring regularly.
+                        </div>
+                        <ul>
+                            <li>Maintain current water treatment processes</li>
+                            <li>Regular monitoring recommended</li>
+                            <li>Document water quality trends</li>
+                        </ul>
+                    {% elif result.lower() in ['poor', 'unsafe'] %}
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle"></i> Immediate action required! Water quality is poor.
+                        </div>
+                        <ul>
+                            <li><strong>Immediate:</strong> Stop water consumption</li>
+                            <li><strong>Short-term:</strong> Investigate contamination source</li>
+                            <li><strong>Long-term:</strong> Implement water treatment solutions</li>
+                            <li>Contact water quality authorities</li>
+                        </ul>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <i class="fas fa-info-circle"></i> Water quality is moderate. Some improvements needed.
+                        </div>
+                        <ul>
+                            <li>Monitor parameters closely</li>
+                            <li>Consider water treatment if needed</li>
+                            <li>Regular testing recommended</li>
+                            <li>Check for potential contaminants</li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('predict') }}" class="btn btn-primary">
+            <i class="fas fa-flask"></i> New Prediction
+        </a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+            <i class="fas fa-chart-line"></i> View History
+        </a>
+    </div>
+</div>
+{% endblock %}

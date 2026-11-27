@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-flask"></i> Water Quality Prediction</h2>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5>Manual Input</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <input type="hidden" name="source" value="manual">
+                        <div class="mb-3">
+                            <label for="ph" class="form-label">pH Level</label>
+                            <input type="number" step="any" value="{{ph}}" class="form-control" id="ph" name="ph" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="temperature" class="form-label">Temperature (°C)</label>
+                            <input type="number" step="any" value="{{temp}}" class="form-control" id="temperature" name="temperature" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="turbidity"  class="form-label">Turbidity (NTU)</label>
+                            <input type="number" step="any" value="{{tur}}" class="form-control" id="turbidity" name="turbidity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tds" class="form-label">TDS (ppm)</label>
+                            <input type="number" step="any" value="{{tds}}" class="form-control" id="tds" name="tds" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-calculator"></i> Predict
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="col-md-2"></div>
+       
+    </div>
+</div>
+{% endblock %}
