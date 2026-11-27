@@ -1,0 +1,7 @@
+# Arduino private credentials
+secrets.h
+
+# Temporary and build files
+*.tmp
+*.bak
+.DS_Store
